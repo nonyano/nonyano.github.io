@@ -70,13 +70,13 @@
       const currentDate = new Date();
       const timeDiff = endDate - currentDate;
 
-      const progressPercentage = (timeDiff / totalTimeDiff) * 100;
+      const progressPercentage = 100 - (timeDiff / totalTimeDiff) * 100;
 
       progressBar.style.width = `${progressPercentage}%`;
 
       // Calculate the position of the heart cursor within the progress bar
       const cursorPosition = (progressBar.clientWidth * progressPercentage) / 100;
-      heartCursor.style.left = `${cursorPosition}px`;
+      heartCursor.style.left = `${progressPercentage}%`;
 
       const daysLeft = Math.floor((endDate - currentDate) / (1000 * 60 * 60 * 24));
       const hoursLeft = Math.floor((endDate - currentDate) % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
