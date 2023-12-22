@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heart Progress Bar</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+      flex-direction: column; /* Adjusted to display elements vertically */
+    }
+
+    #progress-container {
+      position: relative;
+      width: 80%;
+      height: 40px; /* Increased height to accommodate the larger heart */
+      background-color: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px; /* Added space between progress bar and timer */
+      display: flex;
+      align-items: center; /* Center the heart vertically */
+    }
+
+    #progress-bar {
+      background-color: #4caf50; /* Green color for the entire bar */
+      height: 100%;
+      transition: width 0.5s; /* Added transition for smooth width changes */
+    }
+
+    #heart-cursor {
+      font-size: 40px;
+      color: red;
+      position: absolute;
+    }
+
+    #time-left {
+      padding: 10px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+  <div id="heart-cursor">&hearts;</div>
+</div>
+
+<div id="time-left"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const startDate = new Date('2023-12-20'); // Replace with your start date
+    const endDate = new Date('2024-01-08');   // Replace with your end date
+
+    const progressBar = document.getElementById('progress-bar');
+    const heartCursor = document.getElementById('heart-cursor');
+    const timeLeft = document.getElementById('time-left');
+
+    const totalTimeDiff = endDate - startDate;
+
+    function updateProgressBar() {
+      const currentDate = new Date();
+      const timeDiff = endDate - currentDate;
+
+      const progressPercentage = (timeDiff / totalTimeDiff) * 100;
+
+      progressBar.style.width = `${progressPercentage}%`;
+
+      // Calculate the position of the heart cursor within the progress bar
+      const cursorPosition = (progressBar.clientWidth * progressPercentage) / 100;
+      heartCursor.style.left = `${cursorPosition}px`;
+
+      const daysLeft = Math.floor((endDate - currentDate) / (1000 * 60 * 60 * 24));
+      const hoursLeft = Math.floor((endDate - currentDate) % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+      const minutesLeft = Math.floor((endDate - currentDate) % (1000 * 60 * 60) / (1000 * 60));
+      const secondsLeft = Math.floor((endDate - currentDate) % (1000 * 60) / 1000);
+
+      timeLeft.textContent = `Time Left: ${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+    }
+
+    updateProgressBar(); // Initial update
+
+    //setInterval(updateProgressBar, 1000); // Update every second
+  });
+</script>
+
+</body>
+</html>
